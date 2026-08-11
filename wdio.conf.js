@@ -50,12 +50,21 @@ export const config = {
   capabilities: [
     {
       browserName: "chrome",
+      "goog:chromeOptions": {
+        args: ["--headless", "--no-sandbox", "--disable-dev-shm-usage"],
+      },
     },
     {
       browserName: "firefox",
+      "moz:firefoxOptions": {
+        args: ["-headless"],
+      },
     },
     {
-      browserName: "microsoftedge",
+      browserName: "MicrosoftEdge",
+      "ms:edgeOptions": {
+        args: ["--headless", "--no-sandbox", "--disable-dev-shm-usage"],
+      },
     },
   ],
 
