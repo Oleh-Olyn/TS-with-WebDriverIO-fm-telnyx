@@ -1,4 +1,3 @@
-```dockerfile
 FROM node:22-bookworm
 
 WORKDIR /app
@@ -50,4 +49,3 @@ RUN mkdir -p /app/allure-results
 
 # Run WebDriverIO tests
 CMD ["npm", "run", "test:all"]
-```

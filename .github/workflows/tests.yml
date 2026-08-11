@@ -22,6 +22,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Create Allure results directory
+        run: mkdir -p allure-results
+
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
 
@@ -31,8 +34,6 @@ jobs:
       - name: Run tests
         continue-on-error: true
         run: |
-          mkdir -p allure-results
-
           docker run --rm \
             -v "${{ github.workspace }}/allure-results:/app/allure-results" \
             telnyx-wdio-tests
@@ -40,16 +41,17 @@ jobs:
       - name: Check Allure results
         if: always()
         run: |
-          echo "Allure results:"
-          find allure-results -type f || true
+          echo "Contents of allure-results:"
+          ls -la allure-results || true
+          find allure-results -type f -print || true
 
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: allure-results/
-          if-no-files-found: error
+          path: allure-results
+          if-no-files-found: warn
 
   allure:
     needs: tests
@@ -62,6 +64,11 @@ jobs:
         with:
           name: allure-results
           path: allure-results
+
+      - name: Check downloaded results
+        run: |
+          echo "Downloaded Allure results:"
+          find allure-results -type f -print
 
       - name: Install Allure
         run: npm install -g allure-commandline
@@ -79,7 +86,7 @@ jobs:
 
   deploy:
     needs: allure
-    if: always() && needs.allure.result == 'success'
+    if: needs.allure.result == 'success'
     runs-on: ubuntu-latest
 
     environment:
