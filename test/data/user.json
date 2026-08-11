@@ -1,0 +1,14 @@
+{
+  "email": "ivan.ivan@gmail.com",
+  "password": "psswd12345",
+  "firstName": "Ivan",
+  "lastName": "Ivankov",
+
+  "invalidEmails": [
+    "testexample.com",
+    "test@",
+    "@example.com",
+    "test@example",
+    "test@@example.com"
+  ]
+}

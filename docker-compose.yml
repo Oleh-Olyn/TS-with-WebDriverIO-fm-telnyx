@@ -1,0 +1,9 @@
+services:
+  tests:
+    build: .
+    container_name: telnyx-wdio-tests
+    environment:
+      HEADLESS: "true"
+    volumes:
+      - ./allure-results:/app/allure-results
+    command: npm run test:chrome:headless

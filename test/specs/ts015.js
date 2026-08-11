@@ -1,0 +1,18 @@
+import { browser, expect } from "@wdio/globals";
+import MainPage from "../pageobjects/main.page.js";
+import ContactUsPage from "../pageobjects/contactus.page.js";
+
+describe("Checking lookups on Contact Us form", () => {
+  beforeEach(async () => {
+    await browser.setWindowSize(1920, 1080);
+    await browser.url("/");
+  });
+
+  it("test-case 15", async () => {
+    await MainPage.clickContactUsBtn();
+    await expect(browser).toHaveUrl("https://telnyx.com/contact-us");
+
+    await expect(ContactUsPage.reasonContactLkp).toBeDisplayed();
+    await expect(ContactUsPage.countryLkp).toBeDisplayed();
+  });
+});
